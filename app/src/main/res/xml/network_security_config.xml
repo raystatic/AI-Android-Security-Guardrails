@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+
+    <!-- Securely trust staging certificate ONLY for the staging domain -->
+    <domain-config>
+        <domain includeSubdomains="true">staging.myapp.com</domain>
+        <trust-anchors>
+            <certificates src="system" />
+            <!-- Reference the self-signed cert in res/raw/staging_ca -->
+            <certificates src="@raw/staging_ca" />
+        </trust-anchors>
+    </domain-config>
+
+    <debug-overrides>
+        <trust-anchors>
+            <certificates src="user" />
+        </trust-anchors>
+    </debug-overrides>
+</network-security-config>
